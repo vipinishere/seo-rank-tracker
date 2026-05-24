@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { useId } from "react";
 
 const rankEntrySchema = new mongoose.Schema(
   {
@@ -126,7 +125,7 @@ const keywordTrackingSchema = new mongoose.Schema(
 );
 
 keywordTrackingSchema.index(
-  { useId: 1, keyword: 1, domain: 1 },
+  { userId: 1, keyword: 1, domain: 1 },
   { unique: true },
 );
 

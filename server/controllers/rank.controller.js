@@ -1,6 +1,6 @@
 // Add a keyword to track
 
-import KeywordTracking from "../models/keywordTracking.js";
+import KeywordTracking from "../models/keywordTracking.model.js";
 import { keywordTracking } from "../services/keywordTracking.service.js";
 
 export const addKeyword = async (req, res) => {
@@ -17,7 +17,7 @@ export const addKeyword = async (req, res) => {
     // Extract domain from URL
     let domain;
     try {
-      const urlObj = new URL(url.startWith("http") ? url : `https://${url}`);
+      const urlObj = new URL(url.startsWith("http") ? url : `https://${url}`);
 
       domain = urlObj.hostname.replace("www.", "");
     } catch {
@@ -43,8 +43,9 @@ export const addKeyword = async (req, res) => {
     // Create tracking entry
     const tracking = await KeywordTracking.create({
       userId: req.userId,
+      domain: domain.toLowerCase().trim(),
       keyword: keyword.toLowerCase().trim(),
-      url: url.startWith("http") ? url : `https://${url}`,
+      url: url.startsWith("http") ? url : `https://${url}`,
       status: "checking",
     });
 

@@ -14,21 +14,11 @@ type Props = {
 
 interface User {
   id: number;
-  firstName: string;
-  lastName?: string;
-  username?: string;
+  name: string;
   email: string;
-  dialCode?: string;
-  mobile?: string;
-  profileImage?: string;
-  isVerified: boolean;
-  country: string;
-  status: string;
   plan: string;
   analysisCount?: number;
   lastAnalysisDate?: Date;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
 interface AppContextType {
@@ -41,7 +31,7 @@ interface AppContextType {
     password: string,
   ) => Promise<{ success: boolean; message?: string }>;
   register: (
-    firstname: string,
+    name: string,
     email: string,
     password: string,
   ) => Promise<{ success: boolean; message?: string }>;
@@ -82,7 +72,7 @@ export default function AppProvider({ children }: Props) {
       return;
     }
     try {
-      const { data } = await api.get("/users/me");
+      const { data } = await api.get("/api/auth/profile");
       console.log(data);
       if (data.success) {
         setUser(data.user);
@@ -103,14 +93,14 @@ export default function AppProvider({ children }: Props) {
 
   const login = async (email: string, password: string) => {
     try {
-      const res = await axios.post(`${BACKEND_URL}/auth/login`, {
+      const res = await axios.post(`${BACKEND_URL}/api/auth/login`, {
         email,
         password,
       });
       if (res.data.success) {
-        setToken(res.data.accessToken);
+        setToken(res.data.token);
         setUser(res.data.user);
-        localStorage.setItem("token", res.data.accessToken);
+        localStorage.setItem("token", res.data.token);
         return { success: true };
       }
       return { success: false, message: res.data.message };
@@ -130,31 +120,20 @@ export default function AppProvider({ children }: Props) {
     }
   };
 
-  const register = async (
-    firstname: string,
-    email: string,
-    password: string,
-  ) => {
+  const register = async (name: string, email: string, password: string) => {
     try {
-      const otp = await axios.post(`${BACKEND_URL}/auth/send-code`, {
-        email,
-        type: "register",
-      });
-
-      console.log(otp);
-      const res = await axios.post(`${BACKEND_URL}/auth/register`, {
-        firstname,
+      const res = await axios.post(`${BACKEND_URL}/api/auth/register`, {
+        name,
         email,
         password,
-        emailVerificationCode: "000000",
       });
 
       console.log(res);
 
       if (res.data.success) {
-        setToken(res.data.accessToken);
+        setToken(res.data.token);
         setUser(res.data.user);
-        localStorage.setItem("token", res.data.accessToken);
+        localStorage.setItem("token", res.data.token);
         return { success: true };
       }
 

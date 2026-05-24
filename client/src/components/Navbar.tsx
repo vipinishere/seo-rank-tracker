@@ -86,12 +86,10 @@ export default function Navbar() {
                     style={{ color: "var(--background)" }}
                   >
                     {user &&
-                      (user.firstName
-                        ? user.firstName.charAt(0).toUpperCase()
-                        : "U")}
+                      (user.name ? user.name.charAt(0).toUpperCase() : "U")}
                   </div>
                   <span className='text-foreground font-medium'>
-                    {user.firstName}
+                    {user.name || user.email.split("@")[0]}
                   </span>
                   <span className='px-2 py-0.5 rounded-full text-[10px] font-medium uppercase bg-accent/10 border border-accent/15 text-accent'>
                     {user.plan}
@@ -153,13 +151,11 @@ export default function Navbar() {
                     className='w-10 h-10 rounded-full bg-primary flex items-center justify-center text-sm font-bold'
                     style={{ color: "var(--background)" }}
                   >
-                    {user?.firstName
-                      ? user.firstName.charAt(0).toUpperCase()
-                      : "U"}
+                    {user?.name ? user.name.charAt(0).toUpperCase() : "U"}
                   </div>
                   <div>
                     <div className='text-sm font-semibold text-foreground'>
-                      {user.firstName}
+                      {user.name || user.email.split("@")[0]}
                     </div>
                     <div className='text-xs text-muted-foreground'>
                       {user.email}

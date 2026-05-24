@@ -21,6 +21,17 @@ const userSchema = new mongoose.Schema(
       required: true,
       minlength: 6,
     },
+
+    plan: {
+      type: String,
+      enum: ["free", "pro"],
+      default: "free",
+    },
+
+    analysisCount: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,
