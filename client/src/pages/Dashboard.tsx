@@ -8,7 +8,7 @@ import {
   TrendingUpIcon,
 } from "lucide-react";
 import AnalysesCard from "../components/AnalysesCard";
-import { dummyAnalysisData } from "../assets/assets";
+// import { dummyAnalysisData } from "../assets/assets";
 import { useApp } from "../context/AppContext";
 
 interface AnalysisSummary {
